@@ -55,11 +55,13 @@ ChatRWKV with RWKV 14B ctx8192:
 
 ![RWKV-chat](RWKV-chat.png)
 
-RNN is a better candidate for fundamental models, because: 
+RNN 的优势
 - It's more friendly for ASICs (no kv cache). 
 - It's more friendly for RL. 
 -  When we write, our brain is more similar to RNN. 
 -   The universe is like an RNN too (because of locality). Transformers are non-local models.
+
+速度更快 
 
 RWKV-3 1.5B on A40 (tf32) = always 0.015 sec/token, tested using simple pytorch code (no CUDA), GPU utilization 45%, VRAM 7823M
 
