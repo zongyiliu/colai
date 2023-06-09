@@ -47,7 +47,7 @@ print(out.detach().cpu().numpy())                   # same result as above
 
 ![RWKV-eval2](RWKV-eval2.png)
 
-RWKV [loss vs token position] for 10000 ctx4k+ documents in Pile. RWKV 1B5-4k is mostly flat after ctx1500, but 3B-4k and 7B-4k and 14B-4k have some slopes, and they are getting better. This debunks the old view that RNNs cannot model long ctxlens. We can predict that RWKV 100B will be great, and RWKV 1T is probably all you need :)
+RWKV [loss vs token position] for 10000 ctx4k+ documents in Pile. RWKV 1B5-4k is mostly flat after ctx1500, but 3B-4k and 7B-4k and 14B-4k have some slopes, and they are getting better. This debunks the old view that RNNs cannot model long ctxlens. 
 
 ![RWKV-ctxlen](RWKV-ctxlen.png)
 
@@ -57,7 +57,9 @@ ChatRWKV with RWKV 14B ctx8192:
 
 RNN is a better candidate for fundamental models, because: 
 - It's more friendly for ASICs (no kv cache). 
-- It's more friendly for RL. (3) When we write, our brain is more similar to RNN. (4) The universe is like an RNN too (because of locality). Transformers are non-local models.
+- It's more friendly for RL. 
+-  When we write, our brain is more similar to RNN. 
+-   The universe is like an RNN too (because of locality). Transformers are non-local models.
 
 RWKV-3 1.5B on A40 (tf32) = always 0.015 sec/token, tested using simple pytorch code (no CUDA), GPU utilization 45%, VRAM 7823M
 
@@ -75,15 +77,14 @@ Smooth training - no loss spikes! (lr & bsz change around 15G tokens)
 
 All of the trained models will be open-source. Inference is very fast (only matrix-vector multiplications, no matrix-matrix multiplications) even on CPUs.
 
-How it works: RWKV gathers information to a number of channels, which are also decaying with different speeds as you move to the next token. It's very simple once you understand it.
+How it works: RWKV gathers information to a number of channels, which are also decaying with different speeds as you move to the next token.
 
 **RWKV is parallelizable because the time-decay of each channel is data-independent (and trainable)**. For example, in usual RNN you can adjust the time-decay of a channel from say 0.8 to 0.5 (these are called "gates"), while in RWKV you simply move the information from a W-0.8-channel to a W-0.5-channel to achieve the same effect. Moreover, you can fine-tune RWKV into a non-parallelizable RNN (then you can use outputs of later layers of the previous token) if you want extra performance.
 
 ![RWKV-formula](RWKV-formula.png)
 
 
-* HuggingFace integration (check https://github.com/huggingface/transformers/issues/17230
-)
+* HuggingFace integration (check https://github.com/huggingface/transformers/issues/17230)
 
 * Test it on bidirectional & MLM tasks, and image & audio & video tokens.
 
