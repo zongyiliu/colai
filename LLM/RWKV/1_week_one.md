@@ -8,17 +8,11 @@ RWKV is an RNN with Transformer-level LLM performance, which can also be directl
 So it's combining the best of RNN and transformer - **great performance, fast inference, saves VRAM, fast training, "infinite" ctx_len, and free sentence embedding** (using the final hidden state).
 
 ### 界面和下载
-
-
-**Raven 14B** (finetuned on Alpaca+ShareGPT+...) Demo: https://huggingface.co/spaces/BlinkDL/ChatRWKV-gradio
-
-**Raven 7B** (finetuned on Alpaca+ShareGPT+...) Demo: https://huggingface.co/spaces/BlinkDL/Raven-RWKV-7B
-
-**ChatRWKV:** with "stream" and "split" strategies and INT8. **3G VRAM is enough to run RWKV 14B :)** https://github.com/BlinkDL/ChatRWKV
-
-**Download RWKV-4 0.1/0.4/1.5/3/7/14B weights**: https://huggingface.co/BlinkDL
-
-**RWKV pip package**: https://pypi.org/project/rwkv/
+* **Raven 14B** (finetuned on Alpaca+ShareGPT+...) Demo: https://huggingface.co/spaces/BlinkDL/ChatRWKV-gradio
+* **Raven 7B** (finetuned on Alpaca+ShareGPT+...) Demo: https://huggingface.co/spaces/BlinkDL/Raven-RWKV-7B
+* **ChatRWKV:** with "stream" and "split" strategies and INT8. **3G VRAM is enough to run RWKV 14B :)** https://github.com/BlinkDL/ChatRWKV
+* **Download RWKV-4 0.1/0.4/1.5/3/7/14B weights**: https://huggingface.co/BlinkDL
+* **RWKV pip package**: https://pypi.org/project/rwkv/
 
 ```python
 os.environ["RWKV_JIT_ON"] = '1'
@@ -36,25 +30,17 @@ print(out.detach().cpu().numpy())                   # same result as above
 
 ### 文章和项目
 **RWKV Projects**:
-
-https://github.com/saharNooby/rwkv.cpp fast i4 i8 fp16 fp32 CPU inference using [ggml](https://github.com/ggerganov/ggml)
-
-https://github.com/harrisonvanderbyl/rwkv-cpp-cuda fast windows/linux & cuda/rocm/vulkan GPU inference (no need for python & pytorch)
-
-https://github.com/Blealtan/RWKV-LM-LoRA LoRA fine-tuning
-
-https://github.com/josStorer/RWKV-Runner cool GUI
-
-More RWKV projects: https://github.com/search?o=desc&q=rwkv&s=updated&type=Repositories
-
-**RWKV in 150 lines** (model, inference, text generation): https://github.com/BlinkDL/ChatRWKV/blob/main/RWKV_in_150_lines.py
-
-**RWKV文章** https://arxiv.org/abs/2305.13048
+* https://github.com/saharNooby/rwkv.cpp fast i4 i8 fp16 fp32 CPU inference using [ggml](https://github.com/ggerganov/ggml)
+* https://github.com/harrisonvanderbyl/rwkv-cpp-cuda fast windows/linux & cuda/rocm/vulkan GPU inference (no need for python & pytorch)
+* https://github.com/Blealtan/RWKV-LM-LoRA LoRA fine-tuning
+* https://github.com/josStorer/RWKV-Runner cool GUI
+* More RWKV projects: https://github.com/search?o=desc&q=rwkv&s=updated&type=Repositories
+* **RWKV in 150 lines** (model, inference, text generation): https://github.com/BlinkDL/ChatRWKV/blob/main/RWKV_in_150_lines.py
+* **RWKV文章** https://arxiv.org/abs/2305.13048
 
 ![RWKV-paper](RWKV-paper.png)
 
 **RWKV介绍 (numpy)**: https://johanwind.github.io/2023/03/23/rwkv_overview.html https://johanwind.github.io/2023/03/23/rwkv_details.html
-
 * 使用RWKV的文章: https://github.com/ridgerchu/SpikeGPT
 * 知乎介绍1 https://zhuanlan.zhihu.com/p/514840332
 * 知乎介绍2 https://zhuanlan.zhihu.com/p/616351661
@@ -69,7 +55,7 @@ ChatRWKV with RWKV 14B ctx8192:
 
 ![RWKV-chat](RWKV-chat.png)
 
-I believe RNN is a better candidate for fundamental models, because: 
+RNN is a better candidate for fundamental models, because: 
 - It's more friendly for ASICs (no kv cache). 
 - It's more friendly for RL. (3) When we write, our brain is more similar to RNN. (4) The universe is like an RNN too (because of locality). Transformers are non-local models.
 
@@ -94,7 +80,6 @@ How it works: RWKV gathers information to a number of channels, which are also d
 
 ![RWKV-formula](RWKV-formula.png)
 
-Here are some of my TODOs. Let's work together :)
 
 * HuggingFace integration (check https://github.com/huggingface/transformers/issues/17230
 ), and optimized CPU & iOS & Android & WASM & WebGL inference. RWKV is a RNN and very friendly for edge devices. Let's make it possible to run a LLM on your phone. 
